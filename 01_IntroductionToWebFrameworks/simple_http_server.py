@@ -20,7 +20,7 @@ class SimpleGetHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()
-        message = "Привет, мир!"
+        message = "Дарова сучары, я в интернете, всем пизда. Слава украине!"
         self.wfile.write(self._html(message))
 
 
