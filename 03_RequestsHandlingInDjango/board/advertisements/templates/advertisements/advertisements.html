@@ -1,0 +1,10 @@
+<html>
+    <ul>
+        {% for i in advertisements%}
+        <li>{{i}}</li>
+        {% endfor %}
+        <form method="post">{% csrf_token %}
+            <button type="submit">Добавить запись</button>
+        </form>
+    </ul>
+</html>
