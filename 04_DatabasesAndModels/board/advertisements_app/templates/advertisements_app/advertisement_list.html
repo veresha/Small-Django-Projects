@@ -1,4 +1,8 @@
 <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Бесплатные объявления</title>
+    </head>
     <h1>Бесплатные объявления</h1>
 
     {% if advertisement_list %}
@@ -7,7 +11,7 @@
         {% for advertisement in advertisement_list %}
         <li>
             <a href="/advertisements/{{ advertisement.id }}" target="_blank">{{ advertisement.title }}</a>
-            <p>Цена: {{ advertisement.price }}</p>
+            <p>Цена: {{ advertisement.price }} руб.</p>
             <p>Категория: {{ advertisement.category }}</p>
         </li>
         {% endfor %}
