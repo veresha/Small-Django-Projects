@@ -17,6 +17,7 @@ class Advertisement(models.Model):
 
     def views_plus(self):
         self.views_count += 1
+        self.save()
 
     def __str__(self):
         return self.title
