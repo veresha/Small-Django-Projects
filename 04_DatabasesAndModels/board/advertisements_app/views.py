@@ -11,3 +11,8 @@ class AdvertisementListView(generic.ListView):
 
 class AdvertisementDetailView(generic.DetailView):
     model = Advertisement
+
+    def get_object(self, queryset=None):
+        item = super().get_object(queryset)
+        item.views_plus()
+        return item

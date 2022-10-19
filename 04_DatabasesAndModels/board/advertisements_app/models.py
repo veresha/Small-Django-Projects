@@ -7,13 +7,17 @@ class Advertisement(models.Model):
     price = models.IntegerField(default=0, verbose_name='Цена')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     end_date_at = models.DateTimeField(auto_now=True, verbose_name='Дата окончания публикации')
-    views_count = models.IntegerField(default=0, verbose_name='Количество просмотров')
+    views_count = models.SmallIntegerField(default=1, verbose_name='Количество просмотров')
     author = models.ForeignKey('AuthorContactInfo', default=None, null=True, on_delete=models.CASCADE,
                                related_name='author', verbose_name='Автор')
     category = models.ForeignKey('AdvertisementCategory', default=None, null=True, on_delete=models.CASCADE,
                                  related_name='category', verbose_name='Категория')
     type = models.ForeignKey('AdvertisementType', default=None, null=True, on_delete=models.CASCADE,
                              related_name='type', verbose_name='Тип объявления')
+
+    def views_plus(self):
+        self.views_count += 1
+        self.save()
 
     def __str__(self):
         return self.title
