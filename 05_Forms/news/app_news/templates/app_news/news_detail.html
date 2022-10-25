@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.title }}</title>
+</head>
+<body>
+<h1>{{ object.title }}</h1>
+
+<h3>Описание:</h3>
+<p>{{ object.description }}</p>
+<a href="/news/{{ object.id }}/edit" target="_blank">Редактировать</a>
+
+<h3>Комментарии:</h3>
+<p>{% for comment in comment_list %}</p>
+<p>{{ comment.user_name }}: {{ comment.comment_text }}</p>
+{% endfor %}
+<p>-------------------------------</p>
+
+<h3>Добавить комментарий:</h3>
+<form method="post" action="">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Добавить комментарий</button>
+</form>
+
+<p>Создано: {{ object.created_at }}</p>
+<p>Изменено: {{ object.updated_at }}</p>
+</body>
+</html>
