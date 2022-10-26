@@ -20,7 +20,7 @@ class NewsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['pk'] = self.object.id
-        context['comment_list'] = Comment.objects.filter(news_id=self.object.id).all()
+        context['comment_list'] = Comment.objects.filter(news_id=self.object.id)
         context['comment_form'] = CommentForm()
         return context
 
@@ -28,10 +28,9 @@ class NewsDetailView(DetailView):
         comment_form = CommentForm(request.POST)
 
         if comment_form.is_valid():
-            Comment.objects.create(**comment_form.cleaned_data)
-            new_comment = Comment.objects.last()
-            new_comment.pk = pk
-            new_comment.save()
+            news_comment = Comment.objects.create(**comment_form.cleaned_data)
+            news_comment.news_id = pk
+            news_comment.save()
             return HttpResponseRedirect(f'/news/{pk}')
         return render(request, 'news_detail.html', context={
             'comment_form': comment_form

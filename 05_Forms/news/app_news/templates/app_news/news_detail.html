@@ -18,7 +18,7 @@
 <p>-------------------------------</p>
 
 <h3>Добавить комментарий:</h3>
-<form method="post" action="">
+<form method="post">
         {% csrf_token %}
         {{ comment_form.as_p }}
         <button type="submit">Добавить комментарий</button>
