@@ -13,7 +13,7 @@
 
 <h3>Комментарии:</h3>
 <p>{% for comment in comment_list %}</p>
-<p>{{ comment.user_name }}: {{ comment.comment_text }}</p>
+<p>{{ comment.user_name }}: {{ comment.comment_text|truncatechars:15 }}</p>
 {% endfor %}
 <p>-------------------------------</p>
 
