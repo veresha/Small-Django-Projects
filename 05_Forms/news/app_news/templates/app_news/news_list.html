@@ -6,6 +6,13 @@
 </head>
 <body>
 <h2>Новости</h2>
+{% if request.user.is_authenticated %}
+    <h3>Добро пожаловать на сайт {{ request.user.username }}</h3>
+    <a href="{% url 'logout' %}">Выйти</a>
+{% else %}
+    <h3>Вы неавторизированы на нашем сайте</h3>
+    <a href="{% url 'login' %}">Войти</a>
+{% endif %}
 <form action="/news_add" target="_blank">
    <button>Создать новость</button>
 </form>

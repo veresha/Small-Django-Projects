@@ -11,17 +11,25 @@
 <p>{{ object.description }}</p>
 <a href="/news/{{ object.id }}/edit" target="_blank">Редактировать</a>
 
+<p>-------------------------------</p>
+
 <h3>Комментарии:</h3>
 <p>{% for comment in comment_list %}</p>
-<p>{{ comment.user_name }}: {{ comment.comment_text|truncatechars:15 }}</p>
+    <p>{{ comment.user_name }}: {{ comment.comment_text|truncatechars:15 }}</p>
 {% endfor %}
 <p>-------------------------------</p>
 
 <h3>Добавить комментарий:</h3>
+
 <form method="post">
-        {% csrf_token %}
+    {% csrf_token %}
+    {% if request.user.is_authenticated %}
+        <p>Вы залогинены как {{ request.user.username }}</p>
+        {{ comment_form.comment_text }}
+    {% else %}
         {{ comment_form.as_p }}
-        <button type="submit">Добавить комментарий</button>
+    {% endif %}
+    <p><button type="submit">Добавить комментарий</button></p>
 </form>
 
 <p>Создано: {{ object.created_at }}</p>

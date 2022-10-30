@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, View, UpdateView
 from app_news.models import News, Comment
-from app_news.forms import CommentForm, NewsForm
+from app_news.forms import CommentForm, NewsForm, AuthCommentForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -25,12 +25,21 @@ class NewsDetailView(DetailView):
         return context
 
     def post(self, request, pk):
-        comment_form = CommentForm(request.POST)
+        if request.user.is_authenticated:
+            comment_form = AuthCommentForm(request.POST)
+        else:
+            comment_form = CommentForm(request.POST)
 
         if comment_form.is_valid():
-            news_comment = Comment.objects.create(**comment_form.cleaned_data)
-            news_comment.news_id = pk
-            news_comment.save()
+            comment_post = Comment.objects.create(**comment_form.cleaned_data)
+
+            if request.user.is_authenticated:
+                comment_post.user_name = request.user.username
+                comment_post.user = request.user
+            else:
+                comment_post.user_name = comment_form['user_name'].value() + " (аноним)"
+            comment_post.news_id = pk
+            comment_post.save()
             return HttpResponseRedirect(f'/news/{pk}')
         return render(request, 'news_detail.html', context={
             'comment_form': comment_form
