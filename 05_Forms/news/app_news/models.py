@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class News(models.Model):
@@ -17,10 +18,11 @@ class News(models.Model):
 
 
 class Comment(models.Model):
-    user_name = models.CharField(max_length=100, verbose_name='Имя пользователя')
+    user_name = models.CharField(max_length=100, default='', verbose_name='Имя пользователя')
     comment_text = models.TextField(max_length=1500, default='', verbose_name='Текст комментария')
     news = models.ForeignKey('News', default=None, null=True, on_delete=models.CASCADE,
                              related_name='news', verbose_name='Новость')
+    user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Автор')
 
     class Meta:
         db_table = 'comments'
