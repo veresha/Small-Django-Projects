@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required
+from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, View, UpdateView
 from app_news.models import News, Comment
 from app_news.forms import CommentForm, NewsForm, AuthCommentForm
@@ -55,7 +57,10 @@ class NewsUpdateForm(UpdateView):
 
 class NewsFormView(View):
 
+    # @permission_required('app_news.view_news_add')
     def get(self, request):
+        if not request.user.has_perm('app_news.add_news_add'):
+            raise PermissionDenied()
         news_form = NewsForm()
         return render(request, 'app_news/news_add.html', context={'news_form': news_form})
 
@@ -65,6 +70,6 @@ class NewsFormView(View):
         if news_form.is_valid():
 
             News.objects.create(**news_form.cleaned_data)
+            # request.user.news_count += 1
             return HttpResponseRedirect('/')
         return render(request, 'news_list.html', context={'news_form': news_form})
-

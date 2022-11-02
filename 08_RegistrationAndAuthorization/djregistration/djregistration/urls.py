@@ -1,7 +1,7 @@
-"""djregistration URL Configuration
+"""djauth URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from djregistration.views import MainView
+
 
 urlpatterns = [
+    path('', MainView.as_view(), name='main'),
     path('admin/', admin.site.urls),
+    path('users/', include('app_users.urls'))
 ]

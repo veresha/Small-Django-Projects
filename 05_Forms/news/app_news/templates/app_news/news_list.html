@@ -8,14 +8,17 @@
 <h2>Новости</h2>
 {% if request.user.is_authenticated %}
     <h3>Добро пожаловать на сайт {{ request.user.username }}</h3>
-    <a href="{% url 'logout' %}">Выйти</a>
+    <p><a href="{% url 'logout' %}">Выйти</a></p>
+    <p><a href="{% url 'profile' %}">Личный кабинет</a></p>
+    <form action="/news_add" target="_blank">
+       <button>Создать новость</button>
+    </form>
 {% else %}
     <h3>Вы неавторизированы на нашем сайте</h3>
-    <a href="{% url 'login' %}">Войти</a>
+    <p><a href="{% url 'login' %}">Войти </a></p>
+    <p><a href="{% url 'register' %}">Зарегистрироваться</a></p>
 {% endif %}
-<form action="/news_add" target="_blank">
-   <button>Создать новость</button>
-</form>
+
 {% if news_list %}
     <ul>
 
