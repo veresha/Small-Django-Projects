@@ -59,7 +59,8 @@ class NewsFormView(View):
 
     # @permission_required('app_news.view_news_add')
     def get(self, request):
-        if not request.user.has_perm('app_news.add_news_add'):
+        # if not request.user.has_perm('app_news.add_news_add'):
+        if not request.user.profile.verification:
             raise PermissionDenied()
         news_form = NewsForm()
         return render(request, 'app_news/news_add.html', context={'news_form': news_form})
