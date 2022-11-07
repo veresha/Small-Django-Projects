@@ -7,7 +7,10 @@
 <body>
 <h2>Новости</h2>
 {% if request.user.is_authenticated %}
-    <h3>Добро пожаловать на сайт {{ request.user.username }}</h3>
+    <h3>Добро пожаловать на сайт, {{ request.user.username }}</h3>
+    {% if perms.app_users.can_verify %}
+        <p><a href="{% url 'all_users' %}">Список пользователей</a></p>
+    {% endif %}
     <p><a href="{% url 'logout' %}">Выйти</a></p>
     <p><a href="{% url 'profile' %}">Личный кабинет</a></p>
     <form action="/news_add" target="_blank">
@@ -21,18 +24,30 @@
 
 {% if news_list %}
     <ul>
-
         {% for news in news_list %}
         <li>
-            <a href="/news/{{ news.id }}" target="_blank">{{ news.title }}</a>
-            <p>{{ news.created_at }}</p>
-            <p>{{ news.activity }}</p>
+            {% if news.activity %}
+                <a href="/news/{{ news.id }}" target="_blank">{{ news.title }}</a>
+                <p>Создано: {{ news.created_at }}</p>
+                <p>Тег: {{ news.tag }}</p>
+
+            {% elif not news.activity and perms.app_users.can_publish %}
+                <a href="/news/{{ news.id }}" target="_blank">{{ news.title }} - НЕ АКТИВНА</a>
+                <p>Создано: {{ news.created_at }}</p>
+                <p>Тег: {{ news.tag }}</p>
+
+                <form method="post">
+                        {% csrf_token %}
+                        {{ pub_form }}{{ news.id }}
+                        <button type="submit">Опубликовать</button>
+                </form>
+
+            {% else %}
+
+            {% endif %}
         </li>
-
         {% endfor %}
-
     </ul>
-
 
     {% else %}
         <p>Новостей нет</p>

@@ -1,8 +1,26 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView, LogoutView
 from app_users.forms import RegisterForm
 from app_users.models import Profile
+from django.views.generic import View
+
+
+class AllUsersView(View):
+
+    def get(self, request):
+        if not self.request.user.has_perm('app_users.can_verify'):
+            raise PermissionDenied()
+        all_users = Profile.objects.all()
+        return render(request, 'users/all_users.html', {'all_users': all_users})
+
+    def post(self, request):
+        user = Profile.objects.get(id=request.user.id)
+        user.verification = True
+        user.save()
+        all_users = Profile.objects.all()
+        return render(request, 'users/all_users.html', {'all_users': all_users})
 
 
 class UsersLoginView(LoginView):
@@ -10,7 +28,6 @@ class UsersLoginView(LoginView):
 
 
 class UsersLogoutView(LogoutView):
-    # template_name = 'users/logout.html'
     next_page = '/'
 
 

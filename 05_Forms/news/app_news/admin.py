@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app_news.models import News, Comment
+from app_news.models import News, Comment, Tag
 
 
 class CommentInLine(admin.TabularInline):
@@ -34,3 +34,7 @@ class CommentAdmin(admin.ModelAdmin):
 
     mark_as_deleted_by_admin.short_description = 'Перевести в статус "Удалено администратором"'
 
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ['name']

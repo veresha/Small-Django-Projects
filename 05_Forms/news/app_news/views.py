@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, View, UpdateView
 from app_news.models import News, Comment
-from app_news.forms import CommentForm, NewsForm, AuthCommentForm
+from app_users.models import Profile
+from app_news.forms import CommentForm, NewsForm, AuthCommentForm, PublishForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -12,6 +13,18 @@ class NewsListView(ListView):
     template_name = 'news_list.html'
     context_object_name = 'news_list'
     queryset = News.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pub_form'] = PublishForm()
+        return context
+
+    # def post(self, request, **kwargs):
+    #     news_id = PublishForm(request.POST)
+    #     news = News.objects.get(id=news_id)
+    #     news.activity = True
+    #     news.save()
+    #     return HttpResponseRedirect('/')
 
 
 class NewsDetailView(DetailView):
@@ -57,9 +70,7 @@ class NewsUpdateForm(UpdateView):
 
 class NewsFormView(View):
 
-    # @permission_required('app_news.view_news_add')
     def get(self, request):
-        # if not request.user.has_perm('app_news.add_news_add'):
         if not request.user.profile.verification:
             raise PermissionDenied()
         news_form = NewsForm()
@@ -69,8 +80,9 @@ class NewsFormView(View):
         news_form = NewsForm(request.POST)
 
         if news_form.is_valid():
-
             News.objects.create(**news_form.cleaned_data)
-            # request.user.news_count += 1
+            user = Profile.objects.get(id=request.user.id)
+            user.news_amount += 1
+            user.save()
             return HttpResponseRedirect('/')
         return render(request, 'news_list.html', context={'news_form': news_form})

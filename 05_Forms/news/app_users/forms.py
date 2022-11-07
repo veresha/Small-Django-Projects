@@ -9,12 +9,10 @@ class AuthForm(forms.Form):
 
 
 class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=False, help_text='Имя')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Фамилия')
-    city = forms.CharField(max_length=36, required=False, help_text='Город')
-    tel_num = forms.IntegerField(required=False, help_text='Номер телефона')
-    # news_amount = forms.IntegerField(required=False, help_text='Количество опубликованных новостей')
-    # verification = forms.BooleanField(required=False, help_text='Верификация')
+    first_name = forms.CharField(max_length=30, required=False, label='Имя')
+    last_name = forms.CharField(max_length=30, required=False, label='Фамилия')
+    city = forms.CharField(max_length=36, required=False, label='Город')
+    tel_num = forms.IntegerField(required=False, label='Номер телефона')
 
     class Meta:
         model = User

@@ -12,4 +12,5 @@ class Profile(models.Model):
     class Meta:
         permissions = (
             ('can_verify', 'Может верифицировать'),
+            ('can_publish', 'Может публиковать'),
         )
