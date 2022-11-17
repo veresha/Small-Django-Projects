@@ -8,8 +8,8 @@ class CommentInLine(admin.TabularInline):
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'description', 'created_at', 'updated_at', 'activity']
-    list_filter = ['activity']
+    list_display = ['id', 'title', 'description', 'created_at', 'updated_at', 'tag', 'activity']
+    list_filter = ['activity', 'created_at', 'tag']
     inlines = [CommentInLine]
     actions = ['mark_as_active', 'mark_as_inactive']
 

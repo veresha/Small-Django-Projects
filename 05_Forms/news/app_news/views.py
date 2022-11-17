@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, View, UpdateView
-from app_news.models import News, Comment
+from app_news.models import News, Comment, Tag
 from app_users.models import Profile
 from app_news.forms import CommentForm, NewsForm, AuthCommentForm, PublishForm
 from django.shortcuts import render
@@ -16,15 +16,16 @@ class NewsListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['pub_form'] = PublishForm()
+        context['tags'] = Tag.objects.all()
         return context
 
-    # def post(self, request, **kwargs):
-    #     news_id = PublishForm(request.POST)
-    #     news = News.objects.get(id=news_id)
-    #     news.activity = True
-    #     news.save()
-    #     return HttpResponseRedirect('/')
+    def get_queryset(self):
+        queryset = super(NewsListView, self).get_queryset()
+        tag = self.request.GET
+        print(tag)
+        if tag:
+            queryset.filter(tag)
+        return queryset
 
 
 class NewsDetailView(DetailView):
@@ -40,6 +41,11 @@ class NewsDetailView(DetailView):
         return context
 
     def post(self, request, pk):
+        if request.user.has_perm('app_users.can_publish'):
+            news = News.objects.get(id=pk)
+            news.activity = True
+            news.save()
+            return HttpResponseRedirect(f'/news/{pk}')
         if request.user.is_authenticated:
             comment_form = AuthCommentForm(request.POST)
         else:

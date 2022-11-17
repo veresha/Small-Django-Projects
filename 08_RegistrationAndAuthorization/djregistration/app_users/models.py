@@ -7,4 +7,4 @@ class Profile(models.Model):
     city = models.CharField(max_length=36, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     discount_card_num = models.IntegerField()
-    tel_number = models.IntegerField()
+    tel_number = models.CharField()
