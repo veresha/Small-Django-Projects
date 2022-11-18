@@ -22,9 +22,14 @@
     <p><a href="{% url 'register' %}">Зарегистрироваться</a></p>
 {% endif %}
 
-<p>
+<p>Фильтровать новости:
+    <form>
+        <input type="hidden" name="тег" value="По дате">
+        <button type="submit">По дате публикации</button>
+    </form>
     {% for tag in tags %}
         <form method="get">
+            <input type="hidden" name="тег" value="{{ tag }}">
             <button type="submit">{{ tag }}</button>
         </form>
     {% endfor %}

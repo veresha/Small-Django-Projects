@@ -21,11 +21,14 @@ class NewsListView(ListView):
 
     def get_queryset(self):
         queryset = super(NewsListView, self).get_queryset()
-        tag = self.request.GET
-        print(tag)
-        if tag:
-            queryset.filter(tag)
-        return queryset
+        tag = self.request.GET.get('тег')
+        if not tag or tag == 'По дате':
+            return queryset
+        # elif tag == 'По дате':
+        #     return queryset
+        else:
+            tag_id = Tag.objects.get(name=tag)
+            return queryset.filter(tag=tag_id)
 
 
 class NewsDetailView(DetailView):
@@ -46,6 +49,7 @@ class NewsDetailView(DetailView):
             news.activity = True
             news.save()
             return HttpResponseRedirect(f'/news/{pk}')
+
         if request.user.is_authenticated:
             comment_form = AuthCommentForm(request.POST)
         else:
