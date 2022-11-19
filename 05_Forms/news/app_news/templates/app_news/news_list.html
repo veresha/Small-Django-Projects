@@ -7,29 +7,52 @@
 <body>
 <h2>Новости</h2>
 {% if request.user.is_authenticated %}
-    <h3>Добро пожаловать на сайт {{ request.user.username }}</h3>
-    <a href="{% url 'logout' %}">Выйти</a>
+    <h3>Добро пожаловать на сайт, {{ request.user.username }}</h3>
+    {% if perms.app_users.can_verify %}
+        <p><a href="{% url 'all_users' %}">Список пользователей</a></p>
+    {% endif %}
+    <p><a href="{% url 'logout' %}">Выйти</a></p>
+    <p><a href="{% url 'profile' %}">Личный кабинет</a></p>
+    <form action="/news_add" target="_blank">
+       <button>Создать новость</button>
+    </form>
 {% else %}
     <h3>Вы неавторизированы на нашем сайте</h3>
-    <a href="{% url 'login' %}">Войти</a>
+    <p><a href="{% url 'login' %}">Войти </a></p>
+    <p><a href="{% url 'register' %}">Зарегистрироваться</a></p>
 {% endif %}
-<form action="/news_add" target="_blank">
-   <button>Создать новость</button>
-</form>
+
+<p>Фильтровать новости:
+    <form>
+        <input type="hidden" name="тег" value="По дате">
+        <button type="submit">По дате публикации</button>
+    </form>
+    {% for tag in tags %}
+        <form method="get">
+            <input type="hidden" name="тег" value="{{ tag }}">
+            <button type="submit">{{ tag }}</button>
+        </form>
+    {% endfor %}
+</p>
+
 {% if news_list %}
     <ul>
-
         {% for news in news_list %}
         <li>
-            <a href="/news/{{ news.id }}" target="_blank">{{ news.title }}</a>
-            <p>{{ news.created_at }}</p>
-            <p>{{ news.activity }}</p>
+            {% if news.activity %}
+                <a href="/news/{{ news.id }}" target="_blank">{{ news.title }}</a>
+                <p>Создано: {{ news.created_at }}</p>
+                <p>Тег: {{ news.tag }}</p>
+
+            {% elif not news.activity and perms.app_users.can_publish %}
+                <a href="/news/{{ news.id }}" target="_blank">{{ news.title }} - НЕ АКТИВНА</a>
+                <p>Создано: {{ news.created_at }}</p>
+                <p>Тег: {{ news.tag }}</p>
+
+            {% endif %}
         </li>
-
         {% endfor %}
-
     </ul>
-
 
     {% else %}
         <p>Новостей нет</p>

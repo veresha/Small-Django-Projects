@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+</head>
+<body>
+    <a href="/">Вернуться на главную</a>
+    <h4>Список пользователей</h4>
+    <ul>
+        {% for user in all_users %}
+            <li>
+                <p>{{ user.user.username }}</p>
+                <p>Город: {{ user.city }}</p>
+                <p>Номер телефона: {{ user.tel_num }}</p>
+                <p>Количество новостей: {{ user.news_amount }}</p>
+                {% if user.verification == False %}
+                    Не верифицирован
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit">Верифицировать</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

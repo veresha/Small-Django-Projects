@@ -6,7 +6,7 @@
 </head>
 <body>
     <h2>Создание новости</h2>
-    <form method="post" action="/app_news/news_add/">
+    <form method="post" action="">
         {% csrf_token %}
         {{ news_form.as_p }}
         <button type="submit">Создать новость</button>

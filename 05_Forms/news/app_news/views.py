@@ -1,6 +1,9 @@
+from django.contrib.auth.decorators import permission_required
+from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, View, UpdateView
-from app_news.models import News, Comment
-from app_news.forms import CommentForm, NewsForm, AuthCommentForm
+from app_news.models import News, Comment, Tag
+from app_users.models import Profile
+from app_news.forms import CommentForm, NewsForm, AuthCommentForm, PublishForm
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -10,6 +13,22 @@ class NewsListView(ListView):
     template_name = 'news_list.html'
     context_object_name = 'news_list'
     queryset = News.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()
+        return context
+
+    def get_queryset(self):
+        queryset = super(NewsListView, self).get_queryset()
+        tag = self.request.GET.get('тег')
+        if not tag or tag == 'По дате':
+            return queryset
+        # elif tag == 'По дате':
+        #     return queryset
+        else:
+            tag_id = Tag.objects.get(name=tag)
+            return queryset.filter(tag=tag_id)
 
 
 class NewsDetailView(DetailView):
@@ -25,6 +44,12 @@ class NewsDetailView(DetailView):
         return context
 
     def post(self, request, pk):
+        if request.user.has_perm('app_users.can_publish'):
+            news = News.objects.get(id=pk)
+            news.activity = True
+            news.save()
+            return HttpResponseRedirect(f'/news/{pk}')
+
         if request.user.is_authenticated:
             comment_form = AuthCommentForm(request.POST)
         else:
@@ -56,6 +81,8 @@ class NewsUpdateForm(UpdateView):
 class NewsFormView(View):
 
     def get(self, request):
+        if not request.user.profile.verification:
+            raise PermissionDenied()
         news_form = NewsForm()
         return render(request, 'app_news/news_add.html', context={'news_form': news_form})
 
@@ -63,8 +90,9 @@ class NewsFormView(View):
         news_form = NewsForm(request.POST)
 
         if news_form.is_valid():
-
             News.objects.create(**news_form.cleaned_data)
+            user = Profile.objects.get(id=request.user.id)
+            user.news_amount += 1
+            user.save()
             return HttpResponseRedirect('/')
         return render(request, 'news_list.html', context={'news_form': news_form})
-

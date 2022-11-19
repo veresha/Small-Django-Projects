@@ -10,6 +10,15 @@
 <h3>Описание:</h3>
 <p>{{ object.description }}</p>
 <a href="/news/{{ object.id }}/edit" target="_blank">Редактировать</a>
+<p>
+    {% if not news.activity and perms.app_users.can_publish %}
+        <form method="post" name="publish">
+            {% csrf_token %}
+            <button type="submit">Опубликовать</button>
+        </form>
+    {% endif %}
+</p>
+
 
 <p>-------------------------------</p>
 

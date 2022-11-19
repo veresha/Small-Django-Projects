@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <a href="/">Вернуться на главную</a>
+    <p>Ваш ник: {{ request.user.username }}</p>
+    <p>Имя: {{ request.user.first_name }}</p>
+    <p>Фамилия: {{ request.user.last_name }}</p>
+    <p>Город: {{ request.user.city }}</p>
+    <p>Количество опубликованных новостей: {{ request.user.news_amount }}</p>
+</body>
+</html>
