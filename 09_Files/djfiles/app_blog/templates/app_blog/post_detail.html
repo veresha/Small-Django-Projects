@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись</title>
+</head>
+<body>
+    <h2>Запись</h2>
+    <p>{{ post.user }}</p>
+    <p>{{ post.description }}</p>
+    <p>{% for image in images %}
+        <img src="{{ image.image.url }}">
+        {% endfor %}
+    </p>
+    <form action="/post/{{ post.id }}/edit" target="_blank">
+        <button>Редактировать</button>
+    </form>
+    <p>Создано: {{ post.created_at }}</p>
+</body>
+</html>
