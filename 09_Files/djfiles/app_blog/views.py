@@ -60,9 +60,10 @@ def update_posts(request):
         if upload_file_form.is_valid():
             posts_file = upload_file_form.cleaned_data['file'].read()
             posts_str = posts_file.decode('utf-8').split('\n')
-            csv_reader = reader(posts_str, delimetr=',', quotechar='"')
+            csv_reader = reader(posts_str, delimiter=';', quotechar='"')
             for row in csv_reader:
-                Post.objects.create(description=str(row[0]), created_at=str(row[1]), user=request.user)
+                print(row)
+                Post.objects.create(description=row[0], created_at=row[1], user=request.user)
             return HttpResponse(content='Записи успешно добавлены', status=200)
     else:
         upload_file_form = UploadPostsForm()
