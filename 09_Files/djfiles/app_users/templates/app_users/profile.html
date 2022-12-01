@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <a href="/">Вернуться на главную</a>
+    <p>Ваш ник: {{ request.user.username }}</p>
+    <p>Имя: {{ request.user.first_name }}</p>
+    <p>Фамилия: {{ request.user.last_name }}</p>
+    <form action="/users/profile/{{ request.user.id }}/edit">
+        <button>Редактировать</button>
+    </form>
+</body>
+</html>

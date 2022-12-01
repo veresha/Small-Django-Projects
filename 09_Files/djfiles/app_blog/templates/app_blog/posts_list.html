@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Блогограм</title>
+</head>
+<body>
+    <h2>Блогограм</h2>
+
+    {% if request.user.is_authenticated %}
+        <h3>Добро пожаловать на сайт, {{ request.user.username }}</h3>
+
+        <form action="{% url 'logout' %}">
+            <button type="submit">Выйти</button>
+        </form>
+
+        <form action="{% url 'profile' %}">
+            <button type="submit">Личный кабинет</button>
+        </form>
+
+        <form action="{% url 'post-add' %}" target="_blank">
+           <button>Создать запись</button>
+
+        </form><form action="{% url 'update-posts' %}" target="_blank">
+           <button>Загрузить записи</button>
+        </form>
+
+
+    {% else %}
+        <h3>Вы не авторизованы на нашем сайте</h3>
+
+        <form action="{% url 'login' %}" target="_blank">
+           <button>Войти</button>
+        </form>
+        <form action="{% url 'register' %}" target="_blank">
+           <button>Зарегистрироваться</button>
+        </form>
+    {% endif %}
+
+
+    {% if posts_list %}
+    <ul>
+        {% for post in posts_list %}
+        <li>
+            <p>{{ post.user }}:</p>
+            <p>{{ post.description|truncatechars:100 }}</p>
+            <form action="/posts/{{ post.id }}" target="_blank">
+                <button type="submit">Подробней</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% else %}
+        <p>Записей нет</p>
+    {% endif %}
+
+</body>
+</html>
