@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Редактирование профиля</title>
-</head>
-<body>
-    <h1>Редактирование профиля</h1>
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Редактирование профиля" %}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "Редактирование профиля" %}</h2>
+
+    {% include 'navbar.html' %}
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Сохранить</button>
+        <button type="submit">{% trans "Сохранить" %}</button>
     </form>
-</body>
-</html>
+
+{% endblock %}

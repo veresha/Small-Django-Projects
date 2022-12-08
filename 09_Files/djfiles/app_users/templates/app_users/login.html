@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Вход</title>
-</head>
-<body>
-    <h2>Страница входа</h2>
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Вход" %}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "Страница входа" %}</h2>
+
+    {% include 'navbar.html' %}
+
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Войти</button>
-</body>
-</html>
+        <button type="submit">{% trans "Войти" %}</button>
+
+{% endblock %}

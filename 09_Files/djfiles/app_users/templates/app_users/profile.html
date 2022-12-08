@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Личный кабинет</title>
-</head>
-<body>
-    <a href="/">Вернуться на главную</a>
-    <p>Ваш ник: {{ request.user.username }}</p>
-    <p>Имя: {{ request.user.first_name }}</p>
-    <p>Фамилия: {{ request.user.last_name }}</p>
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Личный кабинет" %}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "Личный кабинет" %}</h2>
+
+    {% include 'navbar.html' %}
+
+    <p>{% trans "Ваш ник" %}: {{ request.user.username }}</p>
+    <p>{% trans "Имя" %}: {{ request.user.first_name }}</p>
+    <p>{% trans "Фамилия" %}: {{ request.user.last_name }}</p>
     <form action="/users/profile/{{ request.user.id }}/edit">
-        <button>Редактировать</button>
+        <button>{% trans "Редактировать" %}</button>
     </form>
-</body>
-</html>
+
+{% endblock %}

@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Загрузка файла с записями</title>
-</head>
-<body>
-    <h1>Загрузка файла с записями</h1>
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Загрузка файла с записями" %}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "Загрузка файла с записями" %}</h2>
+
+    {% include 'navbar.html' %}
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Загрузить файл</button>
+        <button type="submit">{% trans "Загрузить файл" %}</button>
     </form>
-</body>
-</html>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if request.user.is_authenticated %}
+    <nav>
+        <a href="{% url 'posts' %}">{% trans "Главная" %}</a> |
+        <a href="{% url 'profile' %}">{% trans "Личный кабинет" %}</a> |
+        <a href="{% url 'post-add' %}">{% trans "Создать запись" %}</a> |
+        <a href="{% url 'update-posts' %}">{% trans "Загрузить записи"%}</a> |
+        <a href="{% url 'logout' %}">{% trans "Выйти" %}</a>
+    </nav>
+
+{% else %}
+    <nav>
+        <a href="{% url 'posts' %}">{% trans "Главная" %}</a> |
+        <a href="{% url 'login' %}">{% trans "Войти" %}</a> |
+        <a href="{% url 'register' %}">{% trans "Зарегистрироваться" %}</a>
+    </nav>
+
+{% endif %}

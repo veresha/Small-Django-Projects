@@ -1,42 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Блогограм</title>
-</head>
-<body>
-    <h2>Блогограм</h2>
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Блогограм"%}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "Блогограм"%}</h2>
+
+    <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}">
+        <select name="language">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Go">
+    </form>
+
+    {% include 'navbar.html' %}
 
     {% if request.user.is_authenticated %}
-        <h3>Добро пожаловать на сайт, {{ request.user.username }}</h3>
-
-        <form action="{% url 'logout' %}">
-            <button type="submit">Выйти</button>
-        </form>
-
-        <form action="{% url 'profile' %}">
-            <button type="submit">Личный кабинет</button>
-        </form>
-
-        <form action="{% url 'post-add' %}" target="_blank">
-           <button>Создать запись</button>
-
-        </form><form action="{% url 'update-posts' %}" target="_blank">
-           <button>Загрузить записи</button>
-        </form>
-
-
+        <h3>{% trans "Добро пожаловать на сайт" %}, {{ request.user.username }}</h3>
     {% else %}
-        <h3>Вы не авторизованы на нашем сайте</h3>
-
-        <form action="{% url 'login' %}" target="_blank">
-           <button>Войти</button>
-        </form>
-        <form action="{% url 'register' %}" target="_blank">
-           <button>Зарегистрироваться</button>
-        </form>
+        <h3>{% trans "Вы не авторизованы на нашем сайте" %}</h3>
     {% endif %}
-
 
     {% if posts_list %}
     <ul>
@@ -45,15 +40,14 @@
             <p>{{ post.user }}:</p>
             <p>{{ post.description|truncatechars:100 }}</p>
             <form action="/posts/{{ post.id }}" target="_blank">
-                <button type="submit">Подробней</button>
+                <button type="submit">{% trans "Подробней" %}</button>
             </form>
         </li>
         {% endfor %}
     </ul>
 
     {% else %}
-        <p>Записей нет</p>
+        <p>{% trans "Записей нет" %}</p>
     {% endif %}
 
-</body>
-</html>
+{% endblock %}

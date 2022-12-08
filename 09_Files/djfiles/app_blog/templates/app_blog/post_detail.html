@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Запись</title>
-</head>
-<body>
-    <h2>Запись</h2>
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Запись" %}
+{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "Запись" %}</h2>
+
+    {% include 'navbar.html' %}
+
     <p>{{ post.user }}</p>
     <p>{{ post.description }}</p>
     <p>{% for image in images %}
@@ -13,8 +18,8 @@
         {% endfor %}
     </p>
     <form action="/post/{{ post.id }}/edit" target="_blank">
-        <button>Редактировать</button>
+        <button>{% trans "Редактировать" %}</button>
     </form>
     <p>Создано: {{ post.created_at }}</p>
-</body>
-</html>
+
+{% endblock %}
