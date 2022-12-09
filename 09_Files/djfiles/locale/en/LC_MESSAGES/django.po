@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-09 13:13+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app_blog/apps.py:8
+msgid "blog"
+msgstr "blog"
+
+#: app_blog/models.py:9
+msgid "user"
+msgstr "user"
+
+#: app_blog/models.py:10
+msgid "description"
+msgstr "description"
+
+#: app_blog/models.py:11
+msgid "created at"
+msgstr "created at"
+
+#: app_blog/models.py:22
+msgid "posts"
+msgstr "posts"
+
+#: app_blog/models.py:23 app_blog/models.py:28
+msgid "post"
+msgstr "post"
+
+#: app_blog/models.py:31
+msgid "images"
+msgstr "images"
+
+#: app_blog/models.py:32
+msgid "image"
+msgstr "image"
+
+#: app_blog/templates/app_blog/post_add.html:5
+#: app_blog/templates/app_blog/post_add.html:10
+msgid "Новая запись"
+msgstr "New post"
+
+#: app_blog/templates/app_blog/post_add.html:17
+#: app_blog/templates/app_blog/post_edit.html:17
+#: app_users/templates/app_users/profile_edit.html:17
+msgid "Сохранить"
+msgstr "Save"
+
+#: app_blog/templates/app_blog/post_detail.html:5
+#: app_blog/templates/app_blog/post_detail.html:10
+msgid "Запись"
+msgstr "Post"
+
+#: app_blog/templates/app_blog/post_detail.html:21
+#: app_users/templates/app_users/profile.html:18
+msgid "Редактировать"
+msgstr "Edit"
+
+#: app_blog/templates/app_blog/post_edit.html:5
+msgid "Редактирование"
+msgstr "Editing"
+
+#: app_blog/templates/app_blog/post_edit.html:10
+msgid "Редактирование записи"
+msgstr "Post editing"
+
+#: app_blog/templates/app_blog/posts_list.html:5
+#: app_blog/templates/app_blog/posts_list.html:10
+msgid "Блогограм"
+msgstr "Blogogram"
+
+#: app_blog/templates/app_blog/posts_list.html:31
+msgid "Добро пожаловать на сайт"
+msgstr "Welcome"
+
+#: app_blog/templates/app_blog/posts_list.html:33
+msgid "Вы не авторизованы на нашем сайте"
+msgstr "You are not authorised"
+
+#: app_blog/templates/app_blog/posts_list.html:43
+msgid "Подробней"
+msgstr "More"
+
+#: app_blog/templates/app_blog/posts_list.html:50
+msgid "Записей нет"
+msgstr "No entries"
+
+#: app_blog/templates/app_blog/upload_posts_file.html:5
+#: app_blog/templates/app_blog/upload_posts_file.html:10
+msgid "Загрузка файла с записями"
+msgstr "Upload file with posts"
+
+#: app_blog/templates/app_blog/upload_posts_file.html:17
+msgid "Загрузить файл"
+msgstr "Upload file"
+
+#: app_blog/templates/navbar.html:5 app_blog/templates/navbar.html:14
+msgid "Главная"
+msgstr "Main"
+
+#: app_blog/templates/navbar.html:6
+#: app_users/templates/app_users/profile.html:5
+#: app_users/templates/app_users/profile.html:10
+msgid "Личный кабинет"
+msgstr "Profile"
+
+#: app_blog/templates/navbar.html:7
+msgid "Создать запись"
+msgstr "Create post"
+
+#: app_blog/templates/navbar.html:8
+msgid "Загрузить записи"
+msgstr "Upload posts"
+
+#: app_blog/templates/navbar.html:9
+msgid "Выйти"
+msgstr "Logout"
+
+#: app_blog/templates/navbar.html:15
+#: app_users/templates/app_users/login.html:18
+msgid "Войти"
+msgstr "Login"
+
+#: app_blog/templates/navbar.html:16
+#: app_users/templates/app_users/register.html:17
+msgid "Зарегистрироваться"
+msgstr "Register"
+
+#: app_users/templates/app_users/login.html:5
+msgid "Вход"
+msgstr "Login"
+
+#: app_users/templates/app_users/login.html:10
+msgid "Страница входа"
+msgstr "Login page"
+
+#: app_users/templates/app_users/logout.html:5
+#: app_users/templates/app_users/logout.html:10
+msgid "Выход"
+msgstr "Logout"
+
+#: app_users/templates/app_users/logout.html:14
+msgid "Вы успешно вышли из вашей учётной записи."
+msgstr "You have succesfully logout"
+
+#: app_users/templates/app_users/profile.html:14
+msgid "Ваш ник"
+msgstr "Nickname"
+
+#: app_users/templates/app_users/profile.html:15
+msgid "Имя"
+msgstr "First name"
+
+#: app_users/templates/app_users/profile.html:16
+msgid "Фамилия"
+msgstr "Last name"
+
+#: app_users/templates/app_users/profile_edit.html:5
+#: app_users/templates/app_users/profile_edit.html:10
+msgid "Редактирование профиля"
+msgstr "Profile editing"
+
+#: app_users/templates/app_users/register.html:5
+#: app_users/templates/app_users/register.html:10
+msgid "Регистрация"
+msgstr "Registration"
