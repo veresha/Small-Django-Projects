@@ -9,8 +9,6 @@
 
     <h2>{% trans "Блогограм"%}</h2>
 
-    {% include 'navbar.html' %}
-
     {% if request.user.is_authenticated %}
         <h3>{% trans "Добро пожаловать на сайт" %}, {{ request.user.username }}</h3>
     {% else %}

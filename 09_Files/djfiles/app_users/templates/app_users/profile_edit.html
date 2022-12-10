@@ -9,8 +9,6 @@
 
     <h2>{% trans "Редактирование профиля" %}</h2>
 
-    {% include 'navbar.html' %}
-
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
